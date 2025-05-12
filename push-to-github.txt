@@ -1,0 +1,11 @@
+▶️ Pour l’utiliser :
+
+    Clique droit sur le fichier → Exécuter avec PowerShell
+
+    Ou bien lance-le en ligne de commande PowerShell :
+
+    .\push-to-github.ps1
+
+🧠 Bonus (optionnel) :
+
+Tu peux même le rendre multi-projet avec un paramètre -message si tu veux ajouter des messages de commit personnalisés.

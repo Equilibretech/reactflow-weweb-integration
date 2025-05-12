@@ -1,0 +1,6 @@
+﻿node_modules
+build
+weweb-zip
+*.zip
+.DS_Store
+.env

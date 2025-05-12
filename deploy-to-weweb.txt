@@ -1,0 +1,7 @@
+▶️ Pour l’exécuter :
+
+    Colle ce script dans un fichier deploy-to-weweb.ps1
+
+    Clique droit dessus → Exécuter avec PowerShell
+
+    Attends la fin → Vérifie l'import dans WeWeb

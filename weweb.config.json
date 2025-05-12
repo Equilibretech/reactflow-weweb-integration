@@ -1,0 +1,17 @@
+﻿{
+  "name": "React Flow Synoptic",
+  "version": "1.0.0",
+  "description": "Composant React Flow pour visualisation de graph Xano",
+  "main": "build/static/js/main.js",
+  "weweb": {
+    "type": "component",
+    "props": [
+      {
+        "name": "roomId",
+        "label": "Room ID",
+        "type": "string",
+        "default": ""
+      }
+    ]
+  }
+}

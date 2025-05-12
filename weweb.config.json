@@ -2,7 +2,7 @@
   "name": "React Flow Synoptic",
   "version": "1.0.0",
   "description": "Composant React Flow pour visualisation de graph Xano",
-  "main": "https://cdn.jsdelivr.net/gh/Equilibretech/reactflow-weweb-integration@main/dist/main.js",
+  "main": "https://cosmic-gaufre-ef0ee8.netlify.app/main.js",
   "weweb": {
     "type": "component",
     "props": [

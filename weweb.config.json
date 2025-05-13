@@ -1,16 +1,16 @@
 ﻿{
-  "name": "ReactFlowSynoptic",
+  "name": "HelloWeWeb",
   "version": "1.0.0",
-  "description": "Composant React Flow pour visualisation de graph Xano",
-  "main": "https://cosmic-gaufre-ef0ee8.netlify.app/main.js",
+  "description": "Composant minimal compatible WeWeb",
+  "main": "https://TON-SITE-NETLIFY.netlify.app/main.js",
   "weweb": {
     "type": "component",
     "props": [
       {
-        "name": "roomId",
-        "label": "Room ID",
+        "name": "msg",
+        "label": "Message",
         "type": "string",
-        "default": ""
+        "default": "World"
       }
     ]
   }

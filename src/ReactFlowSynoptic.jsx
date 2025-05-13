@@ -42,18 +42,27 @@ const ReactFlowSynoptic = ({ roomId }) => {
 
   useEffect(() => {
   console.log("Chargement du roomId :", roomId);
-  setNodes([]); // reset immédiat
+  setNodes([]);
   setEdges([]);
 
   fetch(`https://x8ki-letl-twmt.n7.xano.io/api:Dosppuhb/get_graph_by_room_id?room_id=${roomId}`)
     .then(res => res.json())
     .then(json => {
-      console.log("Données reçues :", json); // debug
+      if (!json || !Array.isArray(json.nodes) || !Array.isArray(json.edges)) {
+        console.warn("Réponse Xano invalide ou incomplète :", json);
+        return;
+      }
+
+      console.log("Données reçues :", json);
       const layouted = getLayoutedElements(json.nodes, json.edges);
       setNodes(layouted.nodes);
       setEdges(layouted.edges);
+    })
+    .catch(err => {
+      console.error("Erreur lors de l'appel API Xano :", err);
     });
 }, [roomId, setNodes, setEdges]);
+
 
   return (
     <div style={{ height: '100vh', width: '100%' }}>

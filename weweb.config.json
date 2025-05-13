@@ -2,7 +2,7 @@
   "name": "HelloWeWeb",
   "version": "1.0.0",
   "description": "Composant minimal compatible WeWeb",
-  "main": "https://TON-SITE-NETLIFY.netlify.app/main.js",
+  "main": "https://clinquant-biscuit-d4e305.netlify.app/main.js",
   "weweb": {
     "type": "component",
     "props": [

@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div style={{ height: '100vh' }}>
-      <ReactFlowSynoptic roomId="3aa1b1cb-361f-4451-93b9-12c28b241173" />
+      <ReactFlowSynoptic roomId={roomId} />
     </div>
   );
 }

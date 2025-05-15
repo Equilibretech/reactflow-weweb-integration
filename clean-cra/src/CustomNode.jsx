@@ -3,37 +3,46 @@ import { Handle } from 'reactflow';
 const CustomNode = ({ data }) => {
   const { label, ports } = data;
 
-  // Filtrage des ports par direction
-  const inPorts = ports?.filter(p => p.direction === 'IN' || p.direction === 'IO') || [];
-  const outPorts = ports?.filter(p => p.direction === 'OUT' || p.direction === 'IO') || [];
+  const inPorts = ports?.filter(p => p.direction?.toLowerCase().includes('depuis')) || [];
+  const outPorts = ports?.filter(p => p.direction?.toLowerCase().includes('vers')) || [];
 
-  // Fonction de positionnement vertical
-  const getPortStyle = (index) => ({
-    top: `${40 + index * 20}px`
-  });
+  const getPortY = (index) => 40 + index * 30;
 
   return (
-    <div className="custom-node bg-white rounded-lg border p-2 shadow-md relative">
-      <div className="text-center font-bold">{label}</div>
+    <div style={{
+      background: '#fff',
+      border: '2px solid #444',
+      padding: 10,
+      minWidth: 200,
+      minHeight: Math.max(inPorts.length, outPorts.length) * 32 + 60,
+      position: 'relative'
+    }}>
+      <div style={{ textAlign: 'center', fontWeight: 'bold', marginBottom: 6 }}>{label}</div>
 
+      {/* IN ports - left */}
       {inPorts.map((port, i) => (
-        <Handle
-          key={`in-${port.id}`}
-          type="target"
-          position="left"
-          id={port.id}
-          style={getPortStyle(i)}
-        />
+        <div key={port.id} style={{ position: 'absolute', top: `${getPortY(i)}px`, left: -6, display: 'flex', alignItems: 'center' }}>
+          <Handle
+            type="target"
+            position="left"
+            id={port.id}
+            style={{ top: '50%', transform: 'translateY(-50%)' }}
+          />
+          <span style={{ marginLeft: 8, fontSize: 11 }}>{port.label}</span>
+        </div>
       ))}
 
+      {/* OUT ports - right */}
       {outPorts.map((port, i) => (
-        <Handle
-          key={`out-${port.id}`}
-          type="source"
-          position="right"
-          id={port.id}
-          style={getPortStyle(i)}
-        />
+        <div key={port.id} style={{ position: 'absolute', top: `${getPortY(i)}px`, right: -6, display: 'flex', alignItems: 'center', flexDirection: 'row-reverse' }}>
+          <Handle
+            type="source"
+            position="right"
+            id={port.id}
+            style={{ top: '50%', transform: 'translateY(-50%)' }}
+          />
+          <span style={{ marginRight: 8, fontSize: 11 }}>{port.label}</span>
+        </div>
       ))}
     </div>
   );

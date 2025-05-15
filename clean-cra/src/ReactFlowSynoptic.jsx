@@ -3,6 +3,9 @@ import ReactFlow, { useNodesState, useEdgesState } from 'reactflow';
 import 'reactflow/dist/style.css';
 import dagre from 'dagre';
 
+// 👉 import du composant personnalisé
+import CustomNode from './CustomNode';
+
 const nodeWidth = 200;
 const nodeHeight = 70;
 
@@ -11,7 +14,13 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 
 const getLayoutedElements = (nodes, edges, direction = 'LR') => {
   const isHorizontal = direction === 'LR';
-  dagreGraph.setGraph({ rankdir: direction });
+  dagreGraph.setGraph({
+    rankdir: direction,
+    nodesep: 100, // espace horizontal entre les nodes
+    ranksep: 150, // espace vertical entre les rangs
+    marginx: 20,
+    marginy: 20
+  });
 
   nodes.forEach((node) => {
     dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
@@ -31,18 +40,26 @@ const getLayoutedElements = (nodes, edges, direction = 'LR') => {
       x: nodeWithPosition.x - nodeWidth / 2,
       y: nodeWithPosition.y - nodeHeight / 2,
     };
+    // 👇 Important : active le rendu custom
+    node.type = 'custom';
   });
 
   return { nodes, edges };
 };
+
 
 const ReactFlowSynoptic = ({ roomId }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [isEmpty, setIsEmpty] = useState(false);
 
+  // 👇 mapping des composants React Flow personnalisés
+  const nodeTypes = {
+    custom: CustomNode
+  };
+
   useEffect(() => {
-    console.log("Chargement du roomId :", roomId);
+    console.log("🔄 Chargement du roomId :", roomId);
     setNodes([]);
     setEdges([]);
     setIsEmpty(false);
@@ -50,8 +67,10 @@ const ReactFlowSynoptic = ({ roomId }) => {
     fetch(`https://x8ki-letl-twmt.n7.xano.io/api:Dosppuhb/get_graph_by_room_id?room_id=${roomId}`)
       .then(res => res.json())
       .then(json => {
+        console.log("🧪 Exemple node[0] reçu de Xano :", json.nodes?.[0]); // 👈 DEBUG essentiel
+
         if (!json || !Array.isArray(json.nodes) || !Array.isArray(json.edges)) {
-          console.warn("Réponse Xano invalide ou incomplète :", json);
+          console.warn("❌ Réponse Xano invalide ou incomplète :", json);
           setIsEmpty(true);
           return;
         }
@@ -66,7 +85,7 @@ const ReactFlowSynoptic = ({ roomId }) => {
         setEdges(layouted.edges);
       })
       .catch(err => {
-        console.error("Erreur lors de l'appel API Xano :", err);
+        console.error("❌ Erreur lors de l'appel API Xano :", err);
         setIsEmpty(true);
       });
   }, [roomId, setNodes, setEdges]);
@@ -83,6 +102,7 @@ const ReactFlowSynoptic = ({ roomId }) => {
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
+          nodeTypes={nodeTypes}
           fitView
         />
       )}

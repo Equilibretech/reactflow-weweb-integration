@@ -4,6 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Patch ResizeObserver error (Chrome dev bug)
+const ignoreResizeObserverError = () => {
+  const originalError = window.onerror;
+  window.onerror = function (message, source, lineno, colno, error) {
+    if (message?.toString().includes('ResizeObserver')) {
+      return true; // empêche l'overlay rouge
+    }
+    if (originalError) return originalError(message, source, lineno, colno, error);
+    return false;
+  };
+};
+
+ignoreResizeObserverError();
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
